@@ -120,7 +120,6 @@ DJS;
                     $('input.newQueue:checkbox:checked').each(function () {
                         arr.push($(this).val());
                     });
-                    alert('tryin' + arr);
                     $('#results').load('queueMod.php', {"NewIDS": arr});
                 });
             </script>
