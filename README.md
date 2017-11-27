@@ -1,5 +1,5 @@
 # tweetDelete
-This project came from a need that I had to delete some past tweets that I didn't quite want still floating around.
+This project came from a need that I had to delete some past tweets that I didn't quite want still floating around.  
 It uses [twitter-api-php](https://github.com/J7mbo/twitter-api-php.git) for authentication/calls to the API, and
 [Clusterize.js](https://clusterize.js.org/) to display large sets of tweets without jamming up the browser.
 
