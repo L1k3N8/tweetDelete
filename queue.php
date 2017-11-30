@@ -18,7 +18,7 @@ include './include/apiKeys.php';
 
 function delete_tweet($id){
     global $con;
-    require_once('twitter-api-php/TwitterAPIExchange.php');
+    require_once('../twitter-api-php/TwitterAPIExchange.php');
     $url = "https://api.twitter.com/1.1/statuses/destroy/$id.json";
     $postfields = array('id' => "$id");
     $requestMethod = 'POST';
@@ -62,7 +62,7 @@ function handle(){
             case 0:
                 logIt("Time check passed. A tweet should have been deleted...");
                 break;
-            case 1:
+            case -2:
                 logIt("Post-delete table was empty. A tweet should have been deleted.");
                 break;
             default:
@@ -76,7 +76,7 @@ function handle(){
         logIt("Queue deletion stopped. Will try again later");
         $slpCount = 0;
     }
-    sleep(10);
+    sleep(60);
     goto check;
 }
 
@@ -101,7 +101,7 @@ function queueCheck(){
     if (mysqli_num_rows($result) > 0) {
         while($row = mysqli_fetch_assoc($result)) {
             $oldestQueue = $row['tweet_id'];
-            $sql2 = "SELECT UNIX_TIMESTAMP(time_deleted) as `whendeleted`, unix_timestamp(now(4)) as `nowtime` from deleted_ids ORDER by id DESC LIMIT 1";
+            $sql2 = "SELECT UNIX_TIMESTAMP(time_deleted) as `whendeleted`, unix_timestamp(now(4)) as `nowtime` from deleted_ids ORDER by time_deleted DESC LIMIT 1";
             $result2 = mysqli_query($con, $sql2);
             if (mysqli_num_rows($result2) > 0) {
                 while($row2 = mysqli_fetch_assoc($result2)) {
@@ -119,7 +119,7 @@ function queueCheck(){
             }
             else{
                 delete_tweet($oldestQueue);
-                return 1;
+                return -2;
             }
         }
     } else {
