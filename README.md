@@ -7,5 +7,5 @@ If you want to use it, you'll need to grab a copy of your Tweet Archive in csv f
 In my case, I grabbed the tweet ID, timestamp, and text content of each tweet and imported it into a table simply named tweets.  
 
 The Twitter API limits you to 15 requests per 15 minutes (essentially 1 per minute), which is where the delete queue 
-comes into play. OFten, I find batches of a couple hundred tweets at a time, so the queueing is desinged to make 
+comes into play. Often, I find batches of a couple hundred tweets at a time, so the queueing is desinged to make 
 sure no more than 1 request happens every 60 seconds. That part definitely needs to be tested and refined.
