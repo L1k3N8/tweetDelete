@@ -78,8 +78,8 @@
                     $cd = '';
                 }
                 global $con;
-                include('./include/mysql_con.php');
-                $q = "SELECT tweet_id, timestamp, text FROM tweets WHERE tweet_id NOT IN (SELECT dt_id from deleted_ids) AND tweet_id NOT IN (SELECT tweet_id from d_queue) $wc ORDER BY tweet_id DESC";
+                include('include/mysql_con.php');
+                $q = "SELECT tweet_id, timestamp, text FROM tweets WHERE tweet_id NOT IN (SELECT coalesce(0000, dt_id) from deleted_ids) AND tweet_id NOT IN (SELECT tweet_id from d_queue) $wc ORDER BY tweet_id DESC";
                 $result = mysqli_query($con, $q);
                 if (mysqli_num_rows($result) > 0) {
                     // output data of each row
