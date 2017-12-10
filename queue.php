@@ -12,12 +12,13 @@ function logIt($text){
     $now = date("F j, Y, g:i a");
     file_put_contents($logfile, "TweetDLete -- [" . $now . "] : $text \n", FILE_APPEND);
 }
-global $con;
+global $con, $oauthToken, $oauthSecret, $myKey, $mySecret;
 include './include/mysql_con.php';
-include './include/apiKeys.php';
+require_once('./include/apiKeys.php');
+
 
 function delete_tweet($id){
-    global $con;
+    global $con, $oauthToken, $oauthSecret, $myKey, $mySecret;
     require_once('../twitter-api-php/TwitterAPIExchange.php');
     $url = "https://api.twitter.com/1.1/statuses/destroy/$id.json";
     $postfields = array('id' => "$id");
